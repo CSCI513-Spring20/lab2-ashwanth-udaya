@@ -1,5 +1,4 @@
 
-
 import java.awt.Point;
 import javafx.application.*;
 import javafx.scene.shape.Rectangle;
@@ -22,6 +21,8 @@ public class OceanExplorer extends Application {
 	 AnchorPane root;
 	 Ship ship;
 	 OceanMap oceanMap=new OceanMap();
+	 int[] IslocX = new int[15];
+	 int[] IslocY = new int[15];
 	//ImageView shipImageView;
 public static void main(String[] args)  {
 launch(args);
@@ -30,6 +31,8 @@ launch(args);
 @Override
 public void start(Stage primaryStage) throws Exception {
 // TODO Auto-generated method stub
+	int count =0;
+	Point ThestartPoint = null;
  root = new AnchorPane();
 Scene scene = new Scene(root,500,500);
 primaryStage.setScene(scene);
@@ -50,6 +53,18 @@ root.getChildren().add(rect);
 startPoint = OceanMap.getShipLocation();
 ship = new Ship(startPoint.x,startPoint.y);
 loadShipImage(root);
+for(int i =0 ;i <11 ;i++)
+{
+
+ThestartPoint =  OceanMap.getislandslocation();//written by ashwath
+if(ThestartPoint.x != 0 && ThestartPoint.y != 0)
+{
+IslocX[count] = ThestartPoint.x ;
+IslocY[count] = ThestartPoint.y ;
+loadIslandsImage(root,ThestartPoint);
+count++;                                       //
+}
+}
 
 }
 public void loadShipImage(AnchorPane root)
@@ -60,6 +75,19 @@ shipImageView= new ImageView(shipImage);
 shipImageView.setX(startPoint.x*scale);
 shipImageView.setY(startPoint.y*scale);
 root.getChildren().add(shipImageView);
+
+
+}
+
+//written by Ashwath
+public void loadIslandsImage(AnchorPane root,Point ThestartPoint)
+{
+
+Image IslandImage = new Image("island.jpg",50,50,true,true);
+IslandImageView= new ImageView(IslandImage);
+IslandImageView.setX(ThestartPoint.x*scale);
+IslandImageView.setY(ThestartPoint.y*scale);
+root.getChildren().add(IslandImageView);
 
 
 }
