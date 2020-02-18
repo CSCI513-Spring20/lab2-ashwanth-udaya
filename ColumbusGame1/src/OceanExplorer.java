@@ -1,4 +1,3 @@
-
 import java.awt.Point;
 import javafx.application.*;
 import javafx.scene.shape.Rectangle;
@@ -12,18 +11,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 
 public class OceanExplorer extends Application {
+
 	final int dimension = 10; // We are creating 10X10 maps
 	final int scale = 50;
 	Point startPoint;
 	Image shipImage;
 	ImageView shipImageView;
+	ImageView PirateImageView;
 	ImageView IslandImageView;
 	 AnchorPane root;
 	 Ship ship;
 	 OceanMap oceanMap=new OceanMap();
 	 int[] IslocX = new int[15];
 	 int[] IslocY = new int[15];
-	//ImageView shipImageView;
+	
 public static void main(String[] args)  {
 launch(args);
 }
@@ -41,6 +42,7 @@ primaryStage.show();
 
 
 
+
 // oceanGrid = oceanMap.getMap();
 for(int x = 0; x < dimension; x++){
 for(int y = 0; y < dimension; y++){
@@ -53,6 +55,8 @@ root.getChildren().add(rect);
 startPoint = OceanMap.getShipLocation();
 ship = new Ship(startPoint.x,startPoint.y);
 loadShipImage(root);
+
+startSailing(scene);
 for(int i =0 ;i <11 ;i++)
 {
 
@@ -62,7 +66,8 @@ if(ThestartPoint.x != 0 && ThestartPoint.y != 0)
 IslocX[count] = ThestartPoint.x ;
 IslocY[count] = ThestartPoint.y ;
 loadIslandsImage(root,ThestartPoint);
-count++;                                       //
+count++;         
+
 }
 }
 
@@ -79,6 +84,8 @@ root.getChildren().add(shipImageView);
 
 }
 
+
+
 //written by Ashwath
 public void loadIslandsImage(AnchorPane root,Point ThestartPoint)
 {
@@ -91,7 +98,36 @@ root.getChildren().add(IslandImageView);
 
 
 }
+
+private void startSailing(Scene scene) {
+scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+@Override
+public void handle(KeyEvent ke) {
+
+switch (ke.getCode()) {
+case RIGHT:
+ship.goEast(IslocX,IslocY);
+break;
+case LEFT:
+ship.goWest(IslocX,IslocY);
+break;
+case UP:
+ship.goNorth(IslocX,IslocY);
+break;
+case DOWN:
+ship.goSouth(IslocX,IslocY);
+break;
+default:
+break;
 }
+shipImageView.setX(ship.getShipLocation().x * scale);
+shipImageView.setY(ship.getShipLocation().y * scale);
+}
+});
+}
+}
+
+
 
 
 

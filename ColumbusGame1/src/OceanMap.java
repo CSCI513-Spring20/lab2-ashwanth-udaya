@@ -4,7 +4,7 @@ import java.util.Random;
 public class OceanMap {
 	static int x,y;
 	static Random r=new Random();
-	
+	public static OceanMap oceanMap = null;
 	static int Isx,Isy;
 public boolean[][] myGrid=new boolean[10][10];
 
@@ -12,7 +12,12 @@ public boolean[][] getmap()
 {
 return myGrid;
 }
-
+public static OceanMap getInstance() {
+if(oceanMap==null) {
+oceanMap=new OceanMap();
+}
+return oceanMap;
+}
 public static Point getShipLocation() {
 	// TODO Auto-generated method stub
 	x=r.nextInt(10);
@@ -31,7 +36,7 @@ public static Point getislandslocation() {
 	}
 	else
 	{
-	return new Point(x,y);
+	return new Point(0,0);
 	}
 
 	
